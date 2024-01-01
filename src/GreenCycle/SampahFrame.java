@@ -127,7 +127,6 @@ public class SampahFrame extends JFrame {
         return 0; 
     }
 }
-
    
     public ModelTable getTableModel() {
         return this.tableModel;
@@ -157,6 +156,19 @@ public class SampahFrame extends JFrame {
     }
 
     public void showAlertFailed(String tidak_ada_yang_diubah) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void showAlertAllEmpty() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+
+    public void showAlertJenisSampahEmpty() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void showAlertNamaSampahEmpty() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

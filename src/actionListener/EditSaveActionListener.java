@@ -33,6 +33,29 @@ public class EditSaveActionListener implements ActionListener {
   
         String total_sampah = this.sampahFrame.getTotalTextField().getText();
 
+        
+       
+        if (nama_sampah.equalsIgnoreCase("") && jenis_sampah.equalsIgnoreCase("") && total_sampah.equalsIgnoreCase("")) {
+            this.sampahFrame.showAlertAllEmpty();
+            return;
+        } else {
+            // Jika nama bernilai kosong
+            if (nama_sampah.equalsIgnoreCase("")) {
+                this.sampahFrame.showAlertNamaSampahEmpty();
+                return;
+            }
+           
+            if (jenis_sampah.equalsIgnoreCase("")) {
+                this.sampahFrame.showAlertJenisSampahEmpty();
+                return;
+            }
+           
+            if (total_sampah.equalsIgnoreCase("")) {
+                this.sampahFrame.showAlertTotalSampahEmpty();
+                return;
+            }
+        }
+
 }
 
 
