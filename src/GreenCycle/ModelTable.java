@@ -36,12 +36,15 @@ public class ModelTable extends AbstractTableModel{
 
         switch (col) {
             case 0:
-                value = rowItem.getNama();
+                value = rowItem.getId();
                 break;
             case 1:
-                value = rowItem.getJenis();
+                value = rowItem.getNama();
                 break;
             case 2:
+                value = rowItem.getJenis();
+                break;
+            case 3:
                 value = String.valueOf(rowItem.getTotal());
                 break;
         }
