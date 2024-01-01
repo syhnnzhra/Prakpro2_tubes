@@ -114,11 +114,21 @@ public class SampahFrame extends JFrame {
     public JTextField getJenisTextField() {
         return textFieldJenis;
     }
-    
-    public JTextField getTotal() {
+
+     public JTextField getTotalTextField() {
         return textFieldTotal;
     }
 
+     public int getTotal() {
+     String totalText = textFieldTotal.getText();
+    try {
+        return Integer.parseInt(totalText);
+    } catch (NumberFormatException e) {
+        return 0; 
+    }
+}
+
+   
     public ModelTable getTableModel() {
         return this.tableModel;
     }
@@ -144,5 +154,9 @@ public class SampahFrame extends JFrame {
             }
         }
         System.out.println();
+    }
+
+    public void showAlertFailed(String tidak_ada_yang_diubah) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
