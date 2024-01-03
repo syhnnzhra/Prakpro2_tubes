@@ -190,4 +190,17 @@ public class SampahFrame extends JFrame {
     public void showAlertTotalSampahEmpty() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+      // Method untuk menambahkan biodata ke tableModel
+    public void addBiodata(Sampah sampah) {
+        // Tambahkan biodata ke tableModel
+        tableModel.add(sampah);
+        // Kembalikan isi textFieldNama ke kondisi kosong
+        textFieldNama.setText("");
+        // Kembalikan isi textFieldTelepon ke kondisi kosong
+        textFieldHP.setText("");
+        // Kembalikan isi textarea ke kondisi kosong
+        txtOutput.setText("");
+    }
+    
 }

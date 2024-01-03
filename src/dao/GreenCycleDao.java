@@ -69,4 +69,38 @@ public class GreenCycleDao {
 
         return sampah;
     }
+    
+    
+    public int insert(Sampah sampah) {
+        // Variable result untuk menyimpan nilai dari eksekusi query apakah berhasil atau tidak
+        int result = -1;
+
+        // Try with resources untuk membuat koneksi ke database
+        try (Connection connection = MySqlConnection.getInstance().getConnection()) {
+            // Membuat PreparedStatement untuk memasukkan data ke database
+            PreparedStatement statement = connection.prepareStatement(
+                    "Insert into sampah(id_sampah, nama_sampah, jenis_sampah, total_sampah) values (?, ?, ?, ?, ?)");
+
+            // Set nilai dari parameter yang ada di query
+            statement.setString(1, sampah.getid_sampah()); // id
+            statement.setString(2, sampah.getnama_sampah()); // nama
+            statement.setString(3, sampah.getjenis_sampah()); // no_telepon
+            statement.setString(4, sampah.gettotal_sampah()); // jenis_kelamin
+            
+            // Eksekusi query
+            result = statement.executeUpdate();
+
+            // Print data yang dimasukkan ke database
+            System.out.println("Insert data: " + sampah.getid_sampah() + " " + sampah.getnama_sampah() + " "
+                    + sampah.getjenis_sampah() + " " + sampah.gettotal_sampah());
+        } catch (SQLException e) {
+            // Print error jika terjadi error
+            e.printStackTrace();
+        }
+
+        // Kembalikan nilai result
+        return result;
+    }
+
+    
 }
