@@ -13,11 +13,11 @@ import dao.GreenCycleDao;
  * @author fathiamaulida
  */
 public class DeleteActionListener implements ActionListener {
-      private final SampahFrame sampahFrame; // Variable biodataFrame untuk menyimpan nilai biodataFrame
-      private final GreenCycleDao greenCycleDao; // Variable biodataDao untuk menyimpan nilai biodataDao
+      private final SampahFrame sampahFrame; // Variable SampahFrame untuk menyimpan nilai sampahFrame
+      private final GreenCycleDao greenCycleDao; // Variable greenCycleDao untuk menyimpan nilai greenCycleDao
   // Constructor HapusActionListener
   public DeleteActionListener(SampahFrame sampahFrame, GreenCycleDao greenCycleDao ) {
-    // Inisialisasi nilai dari biodataFrame dan biodataDao
+    // Inisialisasi nilai dari sampahFrame dan greenCycleDao
     this.sampahFrame = sampahFrame;
     this.greenCycleDao = greenCycleDao;
   }
@@ -47,21 +47,21 @@ public class DeleteActionListener implements ActionListener {
       switch (column) {
           // Jika kolom bernilai 0
           case 0:
-              // Set col dengan nama
+              // Set col dengan id_sampah
               col = "id_sampah";
               break;
            case 1:
-              // Set col dengan no_telepon
+              // Set col dengan nama_sampah
               col = "nama_sampah";
               break;
           // Jika kolom bernilai 2
           case 2:
-              // Set col dengan jenis_kelamin
+              // Set col dengan jenis_sampah
               col = "jenis_sampah";
               break;
           // Jika kolom bernilai 3
           case 3:
-              // Set col dengan alamat
+              // Set col dengan total
               col = "total_sampah";
               break;
               
@@ -71,27 +71,27 @@ public class DeleteActionListener implements ActionListener {
               break;
       }
 
-	  // Set id dengan nilai id dari biodata yang akan dihapus
+	  // Set id dengan nilai id dari sampah yang akan dihapus
 	  id = this.greenCycleDao.select(col, newValue);
 
-      // Variable confirmation untuk menyimpan nilai dari message dialog konfirmasi
+      // Variable confirmation untuk menyimpan nilai dari message sampah konfirmasi
       int confirmation = this.sampahFrame.showConfirmation("hapus");
 
       // Jika confirmation bernilai 1
       if (confirmation == 1) {
-        // Panggil method showAlertFailed pada biodataFrame dengan parameter "tidak dihapus"
+        // Panggil method showAlertFailed pada sampahFrame dengan parameter "tidak dihapus"
         this.sampahFrame.showAlertFailed("tidak dihapus");
         // Batalkan proses
         return;
       } 
       // Jiak confirmation bernilai 0
       else {
-        // Hapus tabel biodata berdasarkan id
+        // Hapus tabel biodata berdasarkan id 
         this.sampahFrame.deletesampah(id);
        
         // Hapus data biodata berdasarkan id
         this.sampahFrame.delete(id);
-        // Panggil method showAlertSuccess pada biodataFrame dengan parameter "dihapus"
+        // Panggil method showAlertSuccess pada sampahFrame dengan parameter "dihapus"
         this.sampahFrame.showAlertSuccess("dihapus");
       }
     }

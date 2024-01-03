@@ -54,4 +54,8 @@ public class ModelTable extends AbstractTableModel{
     public boolean isCellEditable(int row, int col) {
         return false;
     }
+
+    void add(Sampah sampah) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
