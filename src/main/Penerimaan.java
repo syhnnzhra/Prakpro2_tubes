@@ -16,7 +16,7 @@ import db.MySqlConnection;
  *
  * @author syhnn
  */
-public class Permintaan extends javax.swing.JFrame {
+public class Penerimaan extends javax.swing.JFrame {
     public Connection con;
     public Statement st;
     public ResultSet rs;
@@ -26,9 +26,9 @@ public class Permintaan extends javax.swing.JFrame {
     /**
      * Creates new form Permintaan
      */
-    public Permintaan() {
+    public Penerimaan() {
         initComponents();
-        String[] header = {"No", "Customer", "Tanggal" , "Lokasi", "Status"};
+        String[] header = {"No", "ID Penjemputan", "Tanggal", "Status", "Estimasi", "Kurir", "Lokasi"};
         model = new DefaultTableModel(header, 0);
         jTable1.setModel(model);
         tampil();
@@ -53,6 +53,8 @@ public class Permintaan extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,7 +108,7 @@ public class Permintaan extends javax.swing.JFrame {
         );
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Permintaan Penjemputan Sampah");
+        jLabel2.setText("Penerimaan Penjemputan Sampah");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -121,19 +123,35 @@ public class Permintaan extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton6.setText("Sampah");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Data Sampah :");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(223, 223, 223)
+                .addGap(242, 242, 242)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton6)
+                        .addGap(24, 24, 24))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,9 +159,13 @@ public class Permintaan extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 50, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,16 +192,21 @@ public class Permintaan extends javax.swing.JFrame {
        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       Sampah sampah = new Sampah();
+       sampah.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     public void tampil() {
         MySqlConnection connection = new MySqlConnection();
         try {
             con = connection.getConnection();
             st = con.createStatement();
-            rs = st.executeQuery("SELECT ms.nama AS Customer, pj.tanggal_penjemputan AS Tanggal, kr.lokasi AS Lokasi, pj.status AS Status FROM penjemputan pj JOIN kurir kr ON pj.id_kurir = kr.id_kurir JOIN masyarakat ms ON pj.id_masyarakat = ms.id_masyarakat JOIN riwayat rh ON pj.id_penjemputan = rh.id_penjemputan JOIN sampah sp ON pj.id_sampah = sp.id_sampah;");
+            rs = st.executeQuery("SELECT pj.id_penjemputan, pj.tanggal_penjemputan, pj.status, pj.estimasi_waktu, kr.nama_kurir, kr.lokasi FROM penjemputan pj JOIN kurir kr ON pj.id_kurir = kr.id_kurir JOIN masyarakat ms ON pj.id_masyarakat = ms.id_masyarakat JOIN riwayat rh ON pj.id_penjemputan = rh.id_penjemputan JOIN sampah sp ON pj.id_sampah = sp.id_sampah;");
 
             int no = 1;
             while (rs.next()) {
-                String[] row = {Integer.toString(no), rs.getString("Customer"), rs.getString("Tanggal"), rs.getString("Lokasi"), rs.getString("Status")};
+                String[] row = {Integer.toString(no), rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)};
                 model.addRow(row);
                 no++;
             }
@@ -207,20 +234,21 @@ public class Permintaan extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Permintaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Penerimaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Permintaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Penerimaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Permintaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Penerimaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Permintaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Penerimaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Permintaan().setVisible(true);
+                new Penerimaan().setVisible(true);
             }
         });
     }
@@ -231,6 +259,8 @@ public class Permintaan extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
