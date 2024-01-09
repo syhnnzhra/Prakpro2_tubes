@@ -11,8 +11,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 import db.MySqlConnection;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
-
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author syhnn
@@ -52,6 +56,7 @@ public class Sampah extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         Edit = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        Print = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +96,13 @@ public class Sampah extends javax.swing.JFrame {
 
         jButton4.setText("Delete");
 
+        Print.setText("PRINT");
+        Print.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrintActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -102,6 +114,8 @@ public class Sampah extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(Print)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,7 +138,8 @@ public class Sampah extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(Edit)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(Print))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 25, Short.MAX_VALUE))
@@ -211,12 +226,30 @@ public class Sampah extends javax.swing.JFrame {
 
         st.executeUpdate(updateQuery);
         
-        JOptionPane.showMessageDialog(null, "Data updated successfully.", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Data sukses terupdate.", "Update Success", JOptionPane.INFORMATION_MESSAGE);
 
     } catch (SQLException e) {
         System.out.print(e.getMessage());
     }
     }//GEN-LAST:event_EditActionPerformed
+
+    private void PrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintActionPerformed
+        // TODO add your handling code here:
+         MySqlConnection connection = new MySqlConnection();
+         try {
+             String reportPath = "src/main/DataSampah.jasper";
+              con = connection.getConnection();
+              st = con.createStatement();
+              
+              HashMap<String, Object> parameters = new HashMap<>();
+              JasperPrint print = JasperFillManager.fillReport(reportPath, parameters,con);
+              JasperViewer viewer = new JasperViewer(print, false);
+              viewer.setVisible(true);
+             } catch (Exception e) {
+               JOptionPane.showMessageDialog(this, "Gagal Melakukan Print" + e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+             }
+            
+    }//GEN-LAST:event_PrintActionPerformed
 
     public void tampil() {
         MySqlConnection connection = new MySqlConnection();
@@ -275,6 +308,7 @@ public class Sampah extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Edit;
+    private javax.swing.JButton Print;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
