@@ -237,18 +237,19 @@ public class Sampah extends javax.swing.JFrame {
         return;
     }
 
-    String existingId = jTable1.getValueAt(selectedRow, 0).toString(); 
-    String existingNama = jTable1.getValueAt(selectedRow, 1).toString();
-    String existingJenis = jTable1.getValueAt(selectedRow, 2).toString();
-    String existingTotal = jTable1.getValueAt(selectedRow, 3).toString();
+//    String existingNo = jTable1.getValueAt(selectedRow, 0).toString();
+    String existingId = jTable1.getValueAt(selectedRow, 1).toString();
+    String existingNama = jTable1.getValueAt(selectedRow, 2).toString();
+    String existingJenis = jTable1.getValueAt(selectedRow, 3).toString();
+    String existingTotal = jTable1.getValueAt(selectedRow, 4).toString();
 
     String NamaBaru = JOptionPane.showInputDialog(null, "Edit Nama Sampah:", existingNama);
     String JenisBaru = JOptionPane.showInputDialog(null, "Edit Jenis Sampah:", existingJenis);
     String TotalBaru = JOptionPane.showInputDialog(null, "Edit Total Sampah:", existingTotal);
 
-    jTable1.setValueAt(NamaBaru, selectedRow, 1);
-    jTable1.setValueAt(JenisBaru, selectedRow, 2);
-    jTable1.setValueAt(TotalBaru, selectedRow, 3);
+    jTable1.setValueAt(NamaBaru, selectedRow, 2);
+    jTable1.setValueAt(JenisBaru, selectedRow, 3);
+    jTable1.setValueAt(TotalBaru, selectedRow, 4);
 
     MySqlConnection connection = new MySqlConnection();
 

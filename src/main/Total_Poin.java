@@ -28,7 +28,7 @@ public class Total_Poin extends javax.swing.JFrame {
      */
     public Total_Poin() {
         initComponents();
-        String[] header = {"No", "Customer", "Sampah" , "Jenis Sampah", "Total", "Alamat", "Status"};
+        String[] header = {"No", "Customer", "Sampah" , "Jenis Sampah", "Total", "Alamat", "Status", "Poin"};
         model = new DefaultTableModel(header, 0);
         jTable1.setModel(model);
         tampil();
@@ -50,6 +50,7 @@ public class Total_Poin extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -95,12 +96,18 @@ public class Total_Poin extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/green_cycle.png"))); // NOI18N
+        jLabel1.setText("Green Cycle");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
@@ -110,18 +117,20 @@ public class Total_Poin extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(20, 20, 20))
+                .addGap(21, 21, 21))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)
+                        .addComponent(jButton3)
+                        .addComponent(jButton4)
+                        .addComponent(jButton5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -220,11 +229,11 @@ public class Total_Poin extends javax.swing.JFrame {
         try {
             con = connection.getConnection();
             st = con.createStatement();
-            rs = st.executeQuery("SELECT ms.nama AS customer, sp.nama_sampah AS sampah, sp.jenis_sampah, sp.total_sampah, ms.alamat, pj.status FROM penjemputan pj JOIN masyarakat ms ON pj.id_masyarakat = ms.id_masyarakat JOIN sampah sp ON pj.id_sampah = sp.id_sampah;");
+            rs = st.executeQuery("SELECT ms.nama AS customer, sp.nama_sampah AS sampah, sp.jenis_sampah, sp.total_sampah, ms.alamat, pj.status, ms.poin_masyarakat FROM penjemputan pj JOIN masyarakat ms ON pj.id_masyarakat = ms.id_masyarakat JOIN sampah sp ON pj.id_sampah = sp.id_sampah;");
 
             int no = 1;
             while (rs.next()) {
-                String[] row = {Integer.toString(no), rs.getString("customer"), rs.getString("sampah"), rs.getString("jenis_sampah"), rs.getString("total_sampah"), rs.getString("alamat"), rs.getString("status")};
+                String[] row = {Integer.toString(no), rs.getString("customer"), rs.getString("sampah"), rs.getString("jenis_sampah"), rs.getString("total_sampah"), rs.getString("alamat"), rs.getString("status"), rs.getString("poin_masyarakat")};
                 model.addRow(row);
                 no++;
             }
@@ -277,6 +286,7 @@ public class Total_Poin extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
