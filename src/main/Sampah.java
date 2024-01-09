@@ -11,9 +11,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 import db.MySqlConnection;
+import java.util.HashMap;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
-
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author syhnn
@@ -53,6 +57,7 @@ public class Sampah extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         Edit = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        Print = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,11 +101,6 @@ public class Sampah extends javax.swing.JFrame {
         });
 
         jButton4.setText("Delete");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,6 +113,8 @@ public class Sampah extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(Print)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,7 +137,8 @@ public class Sampah extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(Edit)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(Print))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 25, Short.MAX_VALUE))
@@ -222,48 +225,12 @@ public class Sampah extends javax.swing.JFrame {
 
         st.executeUpdate(updateQuery);
         
-        JOptionPane.showMessageDialog(null, "Data updated successfully.", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Data sukses terupdate.", "Update Success", JOptionPane.INFORMATION_MESSAGE);
 
     } catch (SQLException e) {
         System.out.print(e.getMessage());
     }
     }//GEN-LAST:event_EditActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Create tambah = new Create();
-        tambah.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Pilih baris yang akan dihapus.");
-            return;
-        }
-
-        String idSampahToDelete = jTable1.getValueAt(selectedRow, 0).toString();
-
-        MySqlConnection connection = new MySqlConnection();
-        try (Connection con = connection.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM sampah WHERE id_sampah=?")) {
-
-            preparedStatement.setString(1, idSampahToDelete);
-
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Data Terhapus");
-                tampil();
-            } else {
-                JOptionPane.showMessageDialog(this, "ID Sampah tidak ditemukan");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error deleting data: " + e.getMessage());
-        }
-
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     public void tampil() {
         MySqlConnection connection = new MySqlConnection();
@@ -323,6 +290,7 @@ public class Sampah extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Edit;
+    private javax.swing.JButton Print;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
