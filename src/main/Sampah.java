@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 import db.MySqlConnection;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
 /**
@@ -95,6 +96,11 @@ public class Sampah extends javax.swing.JFrame {
         });
 
         jButton4.setText("Delete");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -228,6 +234,37 @@ public class Sampah extends javax.swing.JFrame {
        tambah.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih baris yang akan dihapus.");
+            return;
+        }
+
+        String idSampahToDelete = jTable1.getValueAt(selectedRow, 0).toString();
+
+        MySqlConnection connection = new MySqlConnection();
+        try (Connection con = connection.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM sampah WHERE id_sampah=?")) {
+
+            preparedStatement.setString(0, idSampahToDelete);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Data Terhapus");
+                tampil();
+            } else {
+                JOptionPane.showMessageDialog(this, "ID Sampah tidak ditemukan");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error deleting data: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public void tampil() {
         MySqlConnection connection = new MySqlConnection();
