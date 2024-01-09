@@ -231,8 +231,7 @@ public class Sampah extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Create tambah = new Create();
-       tambah.setVisible(true);
-        dispose();
+        tambah.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -248,7 +247,7 @@ public class Sampah extends javax.swing.JFrame {
         try (Connection con = connection.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM sampah WHERE id_sampah=?")) {
 
-            preparedStatement.setString(0, idSampahToDelete);
+            preparedStatement.setString(1, idSampahToDelete);
 
             int rowsAffected = preparedStatement.executeUpdate();
 
@@ -278,8 +277,9 @@ public class Sampah extends javax.swing.JFrame {
                 model.addRow(row);
                 no++;
             }
-            jTable1.setModel(model);
-
+            Sampah samp = new Sampah();
+            samp.setVisible(true);
+            dispose();
         } catch (SQLException e) {
             System.out.print(e.getMessage());
         }

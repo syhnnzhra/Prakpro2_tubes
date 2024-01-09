@@ -161,6 +161,9 @@ public class Create extends javax.swing.JFrame {
 
             System.out.println("Insert berhasil");
             bersih();
+            Sampah samp = new Sampah();
+            samp.setVisible(true);
+            dispose();
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error: " + e.getMessage());
