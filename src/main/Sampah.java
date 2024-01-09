@@ -50,7 +50,7 @@ public class Sampah extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Edit = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,7 +82,12 @@ public class Sampah extends javax.swing.JFrame {
 
         jButton2.setText("Create");
 
-        jButton3.setText("Edit");
+        Edit.setText("Edit");
+        Edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Delete");
 
@@ -99,7 +104,7 @@ public class Sampah extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -118,7 +123,7 @@ public class Sampah extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
+                    .addComponent(Edit)
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,6 +177,46 @@ public class Sampah extends javax.swing.JFrame {
             System.out.print(e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(null, "Pilih baris data", "Edit Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String existingId = jTable1.getValueAt(selectedRow, 0).toString(); 
+    String existingNama = jTable1.getValueAt(selectedRow, 1).toString();
+    String existingJenis = jTable1.getValueAt(selectedRow, 2).toString();
+    String existingTotal = jTable1.getValueAt(selectedRow, 3).toString();
+
+    String NamaBaru = JOptionPane.showInputDialog(null, "Edit Nama Sampah:", existingNama);
+    String JenisBaru = JOptionPane.showInputDialog(null, "Edit Jenis Sampah:", existingJenis);
+    String TotalBaru = JOptionPane.showInputDialog(null, "Edit Total Sampah:", existingTotal);
+
+    jTable1.setValueAt(NamaBaru, selectedRow, 1);
+    jTable1.setValueAt(JenisBaru, selectedRow, 2);
+    jTable1.setValueAt(TotalBaru, selectedRow, 3);
+
+    MySqlConnection connection = new MySqlConnection();
+
+    try {
+        con = connection.getConnection();
+        st = con.createStatement();
+
+        String updateQuery = "UPDATE sampah SET nama_sampah='" + NamaBaru + "', jenis_sampah='" + JenisBaru +
+                             "', total_sampah='" + TotalBaru + "' WHERE id_sampah=" + existingId;
+
+        st.executeUpdate(updateQuery);
+        
+        JOptionPane.showMessageDialog(null, "Data updated successfully.", "Update Success", JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (SQLException e) {
+        System.out.print(e.getMessage());
+    }
+    }//GEN-LAST:event_EditActionPerformed
 
     public void tampil() {
         MySqlConnection connection = new MySqlConnection();
@@ -229,9 +274,9 @@ public class Sampah extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Edit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
