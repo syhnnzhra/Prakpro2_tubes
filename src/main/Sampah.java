@@ -81,6 +81,11 @@ public class Sampah extends javax.swing.JFrame {
         });
 
         jButton2.setText("Create");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         Edit.setText("Edit");
         Edit.addActionListener(new java.awt.event.ActionListener() {
@@ -217,6 +222,12 @@ public class Sampah extends javax.swing.JFrame {
         System.out.print(e.getMessage());
     }
     }//GEN-LAST:event_EditActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Create tambah = new Create();
+       tambah.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public void tampil() {
         MySqlConnection connection = new MySqlConnection();
